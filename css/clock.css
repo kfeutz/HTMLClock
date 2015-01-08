@@ -1,0 +1,16 @@
+body {
+	background-color:#2E4444;
+}
+
+.title {
+	font-size: 30px;
+	text-align: center;
+	color: white;
+	padding:15px;
+}
+
+.clock-display {
+	font-size:50px;
+	text-align: center;
+	color: white;
+}
