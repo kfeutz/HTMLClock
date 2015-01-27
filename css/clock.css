@@ -8,6 +8,12 @@ body {
 	color: white;
 	padding:15px;
 }
+.sub-heading {
+	font-size: 36px;
+	text-align: center;
+	color: white;
+	padding:15px;
+}
 
 .clock-display {
 	font-size:50px;
