@@ -39,3 +39,32 @@ getTime();
  $(document).ready(function() { 
  	getTemp(); 
  });
+
+ function showAlarmPopup() {
+ 	$('#mask').removeClass('hide');
+ 	$('#popup').removeClass('hide');
+ }
+
+ function hideAlarmPopup() {
+ 	$('#mask').addClass('hide');
+ 	$('#popup').addClass('hide');
+ }
+
+ function insertAlarm(hours, mins, ampm, alarmName) {
+ 	var newDiv = $('<div>').addClass('flexible');
+ 	var nameDiv = $('<div>').addClass('name');
+ 	nameDiv.html(alarmName);
+ 	newDiv.append(nameDiv);
+ 	newDiv.append('<div class="time">' + hours + ':' + mins + ampm + '</div>');
+ 	$("#alarms").append(newDiv);
+ }
+
+ function addAlarm() {
+ 	var hours = $("#hours option:selected").text();
+ 	var mins = $("#mins option:selected").text();
+ 	var ampm = $("#ampm option:selected").text();
+ 	var alarmName = $('#alarmName').val();
+ 	console.log(alarmName);
+ 	insertAlarm(hours, mins, ampm, alarmName);
+ 	hideAlarmPopup();
+ }
