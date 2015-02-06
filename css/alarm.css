@@ -19,6 +19,31 @@ h2 {
 	display: -webkit-flex;
 	display: flex;
 	-webkit-flex-flow: nowrap;
+	border-bottom:1px solid #ccc;
+	margin-bottom:30px;
+}
+.check {
+	float:left;
+}
+.name {
+	font-size:18px;
+	width:45%;
+}
+.time {
+	font-weight: bold;
+	width: 45%;
+	float: left;
+}
+.delete-container {
+	position:relative;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-flex-flow: nowrap;
+	border-bottom:1px solid #ccc;
+	margin-bottom:30px;
 }
 /********** The container that holds the alarm section *********/
 #alarmContainer {
@@ -79,4 +104,9 @@ h2 {
 	width:90%;
 	font-size:14px;
 	margin:10px auto 25px auto;
+}
+
+#delete-btn {
+	position:absolute;
+	right:0px;
 }

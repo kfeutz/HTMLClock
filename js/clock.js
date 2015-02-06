@@ -40,6 +40,10 @@ getTime();
  	getTemp(); 
  });
 
+ window.onload = function() {
+ 	getAllAlarms();
+ }
+
  function showAlarmPopup() {
  	$('#mask').removeClass('hide');
  	$('#popup').removeClass('hide');
@@ -50,13 +54,23 @@ getTime();
  	$('#popup').addClass('hide');
  }
 
- function insertAlarm(hours, mins, ampm, alarmName) {
- 	var newDiv = $('<div>').addClass('flexible');
+ function insertAlarm(hours, mins, ampm, alarmName, alarmId) {
+ 	var time = hours + ':' + mins + ampm
+ 	insertStoredAlarm(time, alarmName, alarmId);
+
+ }
+
+ function insertStoredAlarm(time, alarmName, alarmId) {
+ 	var newDiv = $('<div>').addClass('flexable');
+ 	var checkDiv = $('<input> ', {type: 'checkbox', id: alarmId}).addClass('check');
  	var nameDiv = $('<div>').addClass('name');
  	nameDiv.html(alarmName);
  	newDiv.append(nameDiv);
- 	newDiv.append('<div class="time">' + hours + ':' + mins + ampm + '</div>');
+ 	newDiv.append('<div class="time">' + time + '</div>');
+ 	newDiv.append(checkDiv);
  	$("#alarms").append(newDiv);
+
+ 	
  }
 
  function addAlarm() {
@@ -64,7 +78,57 @@ getTime();
  	var mins = $("#mins option:selected").text();
  	var ampm = $("#ampm option:selected").text();
  	var alarmName = $('#alarmName').val();
- 	console.log(alarmName);
- 	insertAlarm(hours, mins, ampm, alarmName);
- 	hideAlarmPopup();
+
+ 	var AlarmObject = Parse.Object.extend("Alarm");
+    var alarmObject = new AlarmObject();
+    var time = hours + ":" + mins + ampm; 
+
+      alarmObject.save({"time": time,"alarmName": alarmName}, {
+      success: function(object) {
+        insertAlarm(hours, mins, ampm, alarmName, object.id);
+ 		hideAlarmPopup();
+      }
+    });
+ }
+
+ function getAllAlarms() {
+ 	Parse.initialize("GYDUCbQ9boPKsethN4hhYnDFEdEnfq51aWBhYlln", "zunRCHq6OGvjjBYeO9Jov3g2Ww2hbsf8PqBSnhZP");
+ 	var AlarmObject = Parse.Object.extend("Alarm");
+    var query = new Parse.Query(AlarmObject);
+    console.log('getting all alarms');
+    query.find({
+        success: function(results) {
+          for (var i = 0; i < results.length; i++) { 
+            insertStoredAlarm(results[i].get("time"), results[i].get("alarmName"), results[i].id);
+          }
+        }
+    });
+ }
+
+ function deleteAlarm() {
+ 	var alarms = document.getElementById('alarms');
+ 	var checkBoxes = alarms.getElementsByTagName('input');
+	var AlarmObject = Parse.Object.extend("Alarm");
+    var query = new Parse.Query(AlarmObject);
+
+ 	for(var i = 0, len = checkBoxes.length; i < len; i++) {
+ 		if (checkBoxes[i].checked) {
+ 			var deleteId = checkBoxes[i].id;
+
+ 			$("#" + deleteId).parent().addClass("hide");
+ 			$("#" + deleteId).parent().removeClass("flexable");
+ 		    query.get(deleteId, {
+ 		    	success: function (alarms) {
+ 		    		alarms.destroy({
+ 		    			error: function(myObject, error) {
+ 		    				console.log("Error deleting");
+ 		    			}
+ 		    		});
+ 		    	},
+ 		    	error: function(object, error) {
+ 		    		console.log('error');
+ 		    	} 
+ 		    });
+ 		}	 		
+ 	}
  }
