@@ -154,6 +154,7 @@ function getUserId() {
     // Hide the sign-in button now that the user is authorized, for example:
     document.getElementById('signinButton').setAttribute('style', 'display: none');
     getUserId();
+    console.log('returned user id: ' + globalUserId);
 	getAllAlarms(globalUserId);
   } else {
     // Update the app to reflect a signed out user
