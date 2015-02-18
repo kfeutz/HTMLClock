@@ -141,6 +141,7 @@ function getUserId() {
     request.then(function(resp) {
     	var id = resp.result.id
       console.log('successful login by: ' + id);
+      getAllAlarms(id);
       globalUserId = id; 
     }, function(reason) {
       console.log('Error: ' + reason.result.error.message);
@@ -154,8 +155,7 @@ function getUserId() {
     // Hide the sign-in button now that the user is authorized, for example:
     document.getElementById('signinButton').setAttribute('style', 'display: none');
     getUserId();
-    console.log('returned user id: ' + globalUserId);
-	getAllAlarms(globalUserId);
+	
   } else {
     // Update the app to reflect a signed out user
     // Possible error values:
