@@ -1,4 +1,5 @@
 setInterval(function(){getTime()}, 1000);
+var globalUserId;
 
 function getTime() {
 	var clockDiv = document.getElementById("clock");
@@ -138,8 +139,9 @@ function getUserId() {
         'userId': 'me'
           });
     request.then(function(resp) {
-      console.log('successful login by: ' + resp.result.id);
-      return resp.result.id;
+    	var id = resp.result.id
+      console.log('successful login by: ' + id);
+      globalUserId = id; 
     }, function(reason) {
       console.log('Error: ' + reason.result.error.message);
     });
@@ -151,7 +153,8 @@ function getUserId() {
     // Update the app to reflect a signed in user
     // Hide the sign-in button now that the user is authorized, for example:
     document.getElementById('signinButton').setAttribute('style', 'display: none');
-	getAllAlarms('getUserId()');
+    getUserId();
+	getAllAlarms(globalUserId);
   } else {
     // Update the app to reflect a signed out user
     // Possible error values:
