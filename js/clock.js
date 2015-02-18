@@ -139,7 +139,7 @@ function makeApiCall() {
         'userId': 'me'
           });
     request.then(function(resp) {
-      console.log('successful login by: ' + resp.result.displayName);
+      console.log('successful login by: ' + resp.result.id);
     }, function(reason) {
       console.log('Error: ' + reason.result.error.message);
     });
