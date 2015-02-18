@@ -40,10 +40,6 @@ getTime();
  	getTemp(); 
  });
 
- window.onload = function() {
- 	getAllAlarms();
- }
-
  function showAlarmPopup() {
  	$('#mask').removeClass('hide');
  	$('#popup').removeClass('hide');
