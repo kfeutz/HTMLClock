@@ -133,23 +133,25 @@ getTime();
  	}
  }
 
+function makeApiCall() {
+  gapi.client.load('plus', 'v1').then(function() {
+    var request = gapi.client.plus.people.get({
+        'userId': 'me'
+          });
+    request.then(function(resp) {
+      console.log('successful login by: ' + resp.result.displayName);
+    }, function(reason) {
+      console.log('Error: ' + reason.result.error.message);
+    });
+  });
+}
+
  function signinCallback(authResult) {
   if (authResult['status']['signed_in']) {
     // Update the app to reflect a signed in user
     // Hide the sign-in button now that the user is authorized, for example:
     document.getElementById('signinButton').setAttribute('style', 'display: none');
-    $.ajax({
-		type:'GET',
-		url: 'https://www.googleapis.com/plus/v1/people/me',
-		dataType: 'json',	
-	})
-	.done(function (data) {
-		console.log ('success: ' + data);
-	})
-	.fail(function (jqXHR, status) {
-		console.log(jqXHR);
-		console.log(status);
-	});
+	makeApiCall();
   } else {
     // Update the app to reflect a signed out user
     // Possible error values:
