@@ -79,11 +79,13 @@ getTime();
  	var ampm = $("#ampm option:selected").text();
  	var alarmName = $('#alarmName').val();
 
+ 	var userId = getUserId();
+ 	console.log('adding alarm for user: ' + userId);
  	var AlarmObject = Parse.Object.extend("Alarm");
     var alarmObject = new AlarmObject();
     var time = hours + ":" + mins + ampm; 
 
-      alarmObject.save({"time": time,"alarmName": alarmName}, {
+      alarmObject.save({"time": time,"alarmName": alarmName, "userId": userId}, {
       success: function(object) {
         insertAlarm(hours, mins, ampm, alarmName, object.id);
  		hideAlarmPopup();
@@ -91,11 +93,12 @@ getTime();
     });
  }
 
- function getAllAlarms() {
+ function getAllAlarms(userId) {
  	Parse.initialize("GYDUCbQ9boPKsethN4hhYnDFEdEnfq51aWBhYlln", "zunRCHq6OGvjjBYeO9Jov3g2Ww2hbsf8PqBSnhZP");
  	var AlarmObject = Parse.Object.extend("Alarm");
     var query = new Parse.Query(AlarmObject);
     console.log('getting all alarms');
+    query.equalTo("userId", userId);
     query.find({
         success: function(results) {
           for (var i = 0; i < results.length; i++) { 
@@ -133,13 +136,14 @@ getTime();
  	}
  }
 
-function makeApiCall() {
+function getUserId() {
   gapi.client.load('plus', 'v1').then(function() {
     var request = gapi.client.plus.people.get({
         'userId': 'me'
           });
     request.then(function(resp) {
       console.log('successful login by: ' + resp.result.id);
+      return resp.result.id;
     }, function(reason) {
       console.log('Error: ' + reason.result.error.message);
     });
@@ -151,13 +155,14 @@ function makeApiCall() {
     // Update the app to reflect a signed in user
     // Hide the sign-in button now that the user is authorized, for example:
     document.getElementById('signinButton').setAttribute('style', 'display: none');
-	makeApiCall();
+	getAllAlarms(getUserId());
   } else {
     // Update the app to reflect a signed out user
     // Possible error values:
     //   "user_signed_out" - User is signed-out
     //   "access_denied" - User denied access to your app
     //   "immediate_failed" - Could not automatically log in the user
+    document.getElementById('signinButton').setAttribute('style', 'display: inline');
     console.log('Sign-in state: ' + authResult['error']);
   }
 }
