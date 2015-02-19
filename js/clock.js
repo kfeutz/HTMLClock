@@ -76,13 +76,12 @@ getTime();
  	var ampm = $("#ampm option:selected").text();
  	var alarmName = $('#alarmName').val();
 
- 	var userId = getUserId();
- 	console.log('adding alarm for user: ' + userId);
+ 	console.log('Adding alarm for user: ' + globalUserId);
  	var AlarmObject = Parse.Object.extend("Alarm");
     var alarmObject = new AlarmObject();
     var time = hours + ":" + mins + ampm; 
 
-      alarmObject.save({"time": time,"alarmName": alarmName, "userId": userId}, {
+      alarmObject.save({"time": time,"alarmName": alarmName, "userId": globalUserId}, {
       success: function(object) {
         insertAlarm(hours, mins, ampm, alarmName, object.id);
  		hideAlarmPopup();
@@ -94,7 +93,7 @@ getTime();
  	Parse.initialize("GYDUCbQ9boPKsethN4hhYnDFEdEnfq51aWBhYlln", "zunRCHq6OGvjjBYeO9Jov3g2Ww2hbsf8PqBSnhZP");
  	var AlarmObject = Parse.Object.extend("Alarm");
     var query = new Parse.Query(AlarmObject);
-    console.log('getting all alarms');
+    console.log('Getting all alarms for user: ' + userId);
     query.equalTo("userId", userId);
     query.find({
         success: function(results) {
@@ -143,6 +142,7 @@ function getUserId() {
       console.log('successful login by: ' + id);
       getAllAlarms(id);
       globalUserId = id; 
+      document.getElementById('addAlarmButton').setAttribute('style', 'display: inline');
     }, function(reason) {
       console.log('Error: ' + reason.result.error.message);
     });
@@ -163,6 +163,7 @@ function getUserId() {
     //   "access_denied" - User denied access to your app
     //   "immediate_failed" - Could not automatically log in the user
     document.getElementById('signinButton').setAttribute('style', 'display: inline');
+    document.getElementById('addAlarmButton').setAttribute('style', 'display: none');
     console.log('Sign-in state: ' + authResult['error']);
   }
 }

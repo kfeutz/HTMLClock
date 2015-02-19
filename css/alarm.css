@@ -6,11 +6,12 @@ h2 {
 .hide {
 	display:none;
 }
-.button {
+.add-button {
 	display:block;
 	margin:10px auto;
 	width:100px;
 	padding:10px 10px;
+	display:none;
 }
 .flexable {
 	display: -webkit-box;
