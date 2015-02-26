@@ -158,7 +158,6 @@ function getUserId() {
     // Hide the sign-in button now that the user is authorized, for example:
     document.getElementById('signinButton').setAttribute('style', 'display: none');
     getUserId();
-	
   } else {
     // Update the app to reflect a signed out user
     // Possible error values:
@@ -166,7 +165,7 @@ function getUserId() {
     //   "access_denied" - User denied access to your app
     //   "immediate_failed" - Could not automatically log in the user
     document.getElementById('signinButton').setAttribute('style', 'display: inline');
-/*    document.getElementById('addAlarmButton').setAttribute('style', 'display: none');*/
+    document.getElementById('addAlarmButton').setAttribute('style', 'display: none');
     console.log('Sign-in state: ' + authResult['error']);
   }
 }
