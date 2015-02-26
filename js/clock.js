@@ -120,7 +120,7 @@ getTime();
  			$("#" + deleteId).parent().removeClass("flexable");
  		    query.get(deleteId, {
  		    	success: function (alarms) {
- 		    		ga('send', 'event', 'Alarm', 'Delete');
+ 		    		_gaq.push(['_trackEvent', 'Alarm', 'Delete']);
  		    		alarms.destroy({
  		    			error: function(myObject, error) {
  		    				console.log("Error deleting");
