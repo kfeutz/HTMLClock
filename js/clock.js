@@ -83,6 +83,7 @@ getTime();
 
       alarmObject.save({"time": time,"alarmName": alarmName, "userId": globalUserId}, {
       success: function(object) {
+      	ga('send', 'event', 'Alarm', 'Add');
         insertAlarm(hours, mins, ampm, alarmName, object.id);
  		hideAlarmPopup();
       }
@@ -118,6 +119,7 @@ getTime();
  			$("#" + deleteId).parent().removeClass("flexable");
  		    query.get(deleteId, {
  		    	success: function (alarms) {
+ 		    		ga('send', 'event', 'Alarm', 'Delete');
  		    		alarms.destroy({
  		    			error: function(myObject, error) {
  		    				console.log("Error deleting");
