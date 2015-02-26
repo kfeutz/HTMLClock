@@ -42,6 +42,7 @@ getTime();
  });
 
  function showAlarmPopup() {
+
  	$('#mask').removeClass('hide');
  	$('#popup').removeClass('hide');
  }
@@ -71,6 +72,7 @@ getTime();
  }
 
  function addAlarm() {
+ 	ga('send', 'event', 'Alarm', 'Add');
  	var hours = $("#hours option:selected").text();
  	var mins = $("#mins option:selected").text();
  	var ampm = $("#ampm option:selected").text();
@@ -83,7 +85,6 @@ getTime();
 
       alarmObject.save({"time": time,"alarmName": alarmName, "userId": globalUserId}, {
       success: function(object) {
-      	ga('send', 'event', 'Alarm', 'Add');
         insertAlarm(hours, mins, ampm, alarmName, object.id);
  		hideAlarmPopup();
       }
