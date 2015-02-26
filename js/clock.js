@@ -72,7 +72,7 @@ getTime();
  }
 
  function addAlarm() {
- 	ga('send', 'event', 'Alarm', 'Add');
+ 	_gaq.push(['_trackEvent', 'Alarm', 'Add']);
  	var hours = $("#hours option:selected").text();
  	var mins = $("#mins option:selected").text();
  	var ampm = $("#ampm option:selected").text();
