@@ -163,7 +163,7 @@ function getUserId() {
     //   "access_denied" - User denied access to your app
     //   "immediate_failed" - Could not automatically log in the user
     document.getElementById('signinButton').setAttribute('style', 'display: inline');
-    document.getElementById('addAlarmButton').setAttribute('style', 'display: none');
+/*    document.getElementById('addAlarmButton').setAttribute('style', 'display: none');*/
     console.log('Sign-in state: ' + authResult['error']);
   }
 }
