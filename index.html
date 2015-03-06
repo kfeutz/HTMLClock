@@ -25,8 +25,7 @@
             };
 
             function yo() {
-                console.log('in final callback');
-                localStorage["token"];
+                console.log('in final callback: ' + localStorage["token"]);
                 $.ajax({
                   url: "https://api.imgur.com/3/account/me",
                   type: "GET",
