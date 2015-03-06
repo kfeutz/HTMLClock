@@ -25,12 +25,13 @@
             };
 
             function yo() {
-                console.log('in final callback: ' + localStorage["token"]);
+                console.log('in final callback: ' + localStorage.getItem("token"));
+                
                 $.ajax({
                   url: "https://api.imgur.com/3/account/me",
                   type: "GET",
                   headers: {
-                     "Authorization": "Bearer " + localStorage["token"]
+                     "Authorization": "Bearer " + localStorage.getItem("token")
                   },
                   success: function(data, textStatus, xhr){
                      alert("Hello "+ data.data.url +"!");
