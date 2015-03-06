@@ -21,12 +21,22 @@
         <script src="oauth.js?1"></script>
         <script>
             window.onload = function() {
-                var authObj = {'client_id' : '72699c007364c1d', 'type':'token', 'callback_function' : 'yo()'};
-                init(authObj);
+                init({client_id : '72699c007364c1d', type:'token', callback_function : yo()});
             };
 
             function yo() {
                 console.log('in final callback');
+                localStorage["token"];
+                $.ajax({
+                  url: "https://api.imgur.com/3/account/me",
+                  type: "GET",
+                  headers: {
+                     "Authorization": "Bearer " + localStorage["token"]
+                  },
+                  success: function(data, textStatus, xhr){
+                     alert("Hello "+ data.data.url +"!");
+                  }
+               });
             };
         </script>
     </body>
